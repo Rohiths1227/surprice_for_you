@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
@@ -10,12 +9,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-
 import "./App.css";
-
-/* =========================================
-   BIRTHDAY MEMORY PHOTOS
-========================================= */
 
 const memories = [
   {
@@ -63,10 +57,73 @@ const scenes = [
   { name: "One Last Thing", number: "05" },
 ];
 
-/* =========================================
-   FLOATING BACKGROUND PHOTOS
-========================================= */
+// Always calculates the next local midnight.
+function getNextMidnight() {
+  const midnight = new Date();
+  midnight.setHours(24, 0, 0, 0);
+  return midnight.getTime();
+}
 
+// PAGE 3: MIDNIGHT COUNTDOWN
+function BirthdayCountdown() {
+  const [targetTime] = useState(getNextMidnight);
+
+  const [timeLeft, setTimeLeft] = useState(() =>
+    Math.max(0, targetTime - Date.now())
+  );
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      setTimeLeft(Math.max(0, targetTime - Date.now()));
+    };
+
+    updateCountdown();
+
+    const timer = window.setInterval(updateCountdown, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [targetTime]);
+
+  const hours = String(
+    Math.floor(timeLeft / 3600000)
+  ).padStart(2, "0");
+
+  const minutes = String(
+    Math.floor((timeLeft % 3600000) / 60000)
+  ).padStart(2, "0");
+
+  const seconds = String(
+    Math.floor((timeLeft % 60000) / 1000)
+  ).padStart(2, "0");
+
+  return (
+    <div className="birthday-countdown-section">
+      <div className="countdown-content">
+        <div className="countdown-heart">
+          <Heart fill="currentColor" />
+        </div>
+
+        <p className="countdown-label">
+          A special moment is waiting for you...
+        </p>
+
+        <div className="countdown-clock" role="timer">
+          {hours}:{minutes}:{seconds}
+        </div>
+
+        <p className="countdown-message">
+          Every second brings us closer to your celebration. ❤️
+        </p>
+
+        <p className="countdown-small-text">
+          Your birthday celebration begins at midnight!
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// FLOATING BACKGROUND PHOTOS
 function FloatingPhotoBackground() {
   return (
     <div className="floating-photo-background" aria-hidden="true">
@@ -83,10 +140,7 @@ function FloatingPhotoBackground() {
   );
 }
 
-/* =========================================
-   SCENE 1: WELCOME
-========================================= */
-
+// PAGE 1: WELCOME
 function WelcomeScene({ onNext }) {
   return (
     <section className="surprise-scene welcome-scene">
@@ -110,7 +164,11 @@ function WelcomeScene({ onNext }) {
       </p>
 
       <div className="button-row">
-        <button className="primary-button" onClick={onNext} type="button">
+        <button
+          className="primary-button"
+          onClick={onNext}
+          type="button"
+        >
           Open your surprise <ArrowRight size={17} />
         </button>
       </div>
@@ -122,14 +180,13 @@ function WelcomeScene({ onNext }) {
   );
 }
 
-/* =========================================
-   SCENE 2: A LITTLE NOTE
-========================================= */
-
+// PAGE 2: A LITTLE NOTE
 function IntroScene({ onNext, onBack }) {
   return (
     <section className="surprise-scene intro-scene">
-      <p className="scene-eyebrow">A little note from my heart</p>
+      <p className="scene-eyebrow">
+        A little note from my heart
+      </p>
 
       <h1 className="scene-title">
         You make life
@@ -138,9 +195,9 @@ function IntroScene({ onNext, onBack }) {
       </h1>
 
       <p className="scene-description">
-        If I could give you one thing, it would be the ability to see yourself
-        through my eyes. Maybe then you would understand how special you are
-        to me.
+        If I could give you one thing, it would be the ability to see
+        yourself through my eyes. Maybe then you would understand how
+        special you are to me.
       </p>
 
       <blockquote className="intro-quote">
@@ -148,11 +205,19 @@ function IntroScene({ onNext, onBack }) {
       </blockquote>
 
       <div className="button-row">
-        <button className="secondary-button" onClick={onBack} type="button">
+        <button
+          className="secondary-button"
+          onClick={onBack}
+          type="button"
+        >
           <ArrowLeft size={17} /> Go back
         </button>
 
-        <button className="primary-button" onClick={onNext} type="button">
+        <button
+          className="primary-button"
+          onClick={onNext}
+          type="button"
+        >
           There's more <ArrowRight size={17} />
         </button>
       </div>
@@ -160,10 +225,7 @@ function IntroScene({ onNext, onBack }) {
   );
 }
 
-/* =========================================
-   SCENE 3: MAKE A WISH
-========================================= */
-
+// PAGE 3: ALMOST THERE + COUNTDOWN
 function AnticipationScene({ onNext, onBack, onStartMusic }) {
   const [startingMusic, setStartingMusic] = useState(false);
 
@@ -173,10 +235,8 @@ function AnticipationScene({ onNext, onBack, onStartMusic }) {
     setStartingMusic(true);
 
     try {
-      // Start the music directly from the user's button click.
       await onStartMusic();
     } finally {
-      // Open the birthday scene even if the browser blocks audio.
       onNext();
       setStartingMusic(false);
     }
@@ -188,7 +248,9 @@ function AnticipationScene({ onNext, onBack, onStartMusic }) {
         <Heart fill="currentColor" />
       </div>
 
-      <p className="scene-eyebrow">Just a little more magic</p>
+      <p className="scene-eyebrow">
+        Just a little more magic
+      </p>
 
       <h1 className="scene-title">
         Ready for your
@@ -201,6 +263,8 @@ function AnticipationScene({ onNext, onBack, onStartMusic }) {
         <br />
         Your birthday wishes are waiting.
       </p>
+
+      <BirthdayCountdown />
 
       <div className="button-row">
         <button
@@ -224,7 +288,11 @@ function AnticipationScene({ onNext, onBack, onStartMusic }) {
       </p>
 
       <div className="button-row compact-button-row">
-        <button className="secondary-button" onClick={onBack} type="button">
+        <button
+          className="secondary-button"
+          onClick={onBack}
+          type="button"
+        >
           <ArrowLeft size={16} /> Go back
         </button>
       </div>
@@ -232,10 +300,7 @@ function AnticipationScene({ onNext, onBack, onStartMusic }) {
   );
 }
 
-/* =========================================
-   SCENE 4: BIRTHDAY WISHES AND GALLERY
-========================================= */
-
+// PAGE 4: BIRTHDAY MEMORIES
 function BirthdayScene({
   onBack,
   onNext,
@@ -245,17 +310,20 @@ function BirthdayScene({
 }) {
   return (
     <section className="surprise-scene birthday-scene">
-      <p className="scene-eyebrow">Today is all about you</p>
+      <p className="scene-eyebrow">
+        Today is all about you
+      </p>
 
       <h1 className="birthday-heading">
         Happy Birthday,
         <br />
-        <em>my Pappu</em> <span className="birthday-emoji">✦</span>
+        <em>my Pappu</em>{" "}
+        <span className="birthday-emoji">✦</span>
       </h1>
 
       <p className="birthday-description">
-        To the person who makes my world brighter — may this new chapter bring
-        you all the happiness your heart can hold.
+        To the person who makes my world brighter — may this new
+        chapter bring you all the happiness your heart can hold.
       </p>
 
       <div className="music-player">
@@ -280,12 +348,18 @@ function BirthdayScene({
           type="button"
           aria-label={musicPlaying ? "Pause music" : "Play music"}
         >
-          {musicPlaying ? <Pause size={17} /> : <Play size={17} />}
+          {musicPlaying ? (
+            <Pause size={17} />
+          ) : (
+            <Play size={17} />
+          )}
           {musicPlaying ? "Pause" : "Play"}
         </button>
       </div>
 
-      <h2 className="media-heading">Little Pieces of Us</h2>
+      <h2 className="media-heading">
+        Little Pieces of Us
+      </h2>
 
       <p className="gallery-subtitle">
         Every picture holds a memory. Tap one to see it up close.
@@ -301,34 +375,48 @@ function BirthdayScene({
             aria-label={`Open memory: ${memory.title}`}
           >
             <div className="photo-card-image">
-              <img src={memory.src} alt={memory.title} loading="lazy" />
+              <img
+                src={memory.src}
+                alt={memory.title}
+                loading="lazy"
+              />
               <div className="photo-card-shine" />
             </div>
 
             <div className="photo-card-caption">
               <h3>{memory.title}</h3>
-              <p>Memory {String(index + 1).padStart(2, "0")}</p>
+              <p>
+                Memory {String(index + 1).padStart(2, "0")}
+              </p>
             </div>
           </button>
         ))}
       </div>
 
       <p className="memory-note">
-        If I could relive a thousand moments, I would still choose the ones
-        with you.
+        If I could relive a thousand moments, I would still choose
+        the ones with you.
       </p>
 
       <p className="birthday-closing">
-        Happy birthday, Pappu. I hope this little surprise makes you smile
-        today and reminds you how much you mean to me.
+        Happy birthday, Pappu. I hope this little surprise makes you
+        smile today and reminds you how much you mean to me.
       </p>
 
       <div className="button-row">
-        <button className="secondary-button" onClick={onBack} type="button">
+        <button
+          className="secondary-button"
+          onClick={onBack}
+          type="button"
+        >
           <ArrowLeft size={16} /> Go back
         </button>
 
-        <button className="primary-button" onClick={onNext} type="button">
+        <button
+          className="primary-button"
+          onClick={onNext}
+          type="button"
+        >
           One last thing <ArrowRight size={17} />
         </button>
       </div>
@@ -336,14 +424,13 @@ function BirthdayScene({
   );
 }
 
-/* =========================================
-   SCENE 5: FINAL PROMISE
-========================================= */
-
+// PAGE 5: FINAL PROMISE
 function FinalScene({ onBack, onRestart }) {
   return (
     <section className="surprise-scene final-scene">
-      <p className="scene-eyebrow">One last thing...</p>
+      <p className="scene-eyebrow">
+        One last thing...
+      </p>
 
       <h1 className="scene-title">
         A little promise,
@@ -351,56 +438,63 @@ function FinalScene({ onBack, onRestart }) {
         <em>just for you.</em>
       </h1>
 
-      
-<div className="wish-card">
-  <p>
-    Hai Papa! ❤️ Wish you many more happy returns of the day!
-    Ini vara ellam naalum unnoda days romba happy-ah,
-    peaceful-ah, and beautiful-ah irukkanum.
-  </p>
+      <div className="wish-card">
+        <p>
+          Hai Papa! ❤️ Wish you many more happy returns of the day!
+          Ini vara ellam naalum unnoda days romba happy-ah,
+          peaceful-ah, and beautiful-ah irukkanum.
+        </p>
 
-  <p>
-    Sorry Papa, ennala innaiku un kooda irukka mudiyala.
-    Naan romba struggles go through pannitu irukken,
-    especially because of my company issues. Athanala
-    ennala vara mudiyala. I am really, really sorry.
-  </p>
+        <p>
+          Sorry Papa, ennala innaiku un kooda irukka mudiyala.
+          Naan romba struggles go through pannitu irukken,
+          especially because of my company issues. Athanala
+          ennala vara mudiyala. I am really, really sorry.
+        </p>
 
-  <p>
-    Intha ellam issues mudinjathum, unna paakka naane
-    varuven. I promise you! ❤️
-  </p>
+        <p>
+          Intha ellam issues mudinjathum, unna paakka naane
+          varuven. I promise you! ❤️
+        </p>
 
-  <p>
-    Unakku gifts kudukka mudiyalanu enakku romba kashtama
-    irukku. Aana love is not just about gifts, Papa.
-    Efforts, care, and the love behind every little thing
-    dhaan mukkiyam. I hope you understand me.
-  </p>
+        <p>
+          Unakku gifts kudukka mudiyalanu enakku romba kashtama
+          irukku. Aana love is not just about gifts, Papa.
+          Efforts, care, and the love behind every little thing
+          dhaan mukkiyam. I hope you understand me.
+        </p>
 
-  <p>
-    I wish I could be there with you today, celebrate
-    your birthday, see your smile, and make this day
-    more special for you.
-  </p>
+        <p>
+          I wish I could be there with you today, celebrate
+          your birthday, see your smile, and make this day
+          more special for you.
+        </p>
 
-  <div className="promise-line">
-    You will always be special to me, Papa. ❤️
-  </div>
+        <div className="promise-line">
+          You will always be special to me, Papa. ❤️
+        </div>
 
-  <p className="final-signature">
-    Once again, Happy Birthday, Papa!
-    With all my love, always. ♡
-  </p>
-</div>
-
+        <p className="final-signature">
+          Once again, Happy Birthday, Papa!
+          <br />
+          With all my love, always. ♡
+        </p>
+      </div>
 
       <div className="button-row">
-        <button className="secondary-button" onClick={onBack} type="button">
+        <button
+          className="secondary-button"
+          onClick={onBack}
+          type="button"
+        >
           <ArrowLeft size={16} /> Go back
         </button>
 
-        <button className="primary-button" onClick={onRestart} type="button">
+        <button
+          className="primary-button"
+          onClick={onRestart}
+          type="button"
+        >
           <Heart size={16} fill="currentColor" /> Start again
         </button>
       </div>
@@ -408,11 +502,13 @@ function FinalScene({ onBack, onRestart }) {
   );
 }
 
-/* =========================================
-   PHOTO LIGHTBOX
-========================================= */
-
-function MemoryLightbox({ index, onClose, onPrevious, onNext }) {
+// PHOTO LIGHTBOX
+function MemoryLightbox({
+  index,
+  onClose,
+  onPrevious,
+  onNext,
+}) {
   const memory = memories[index];
 
   const handleClose = useCallback(() => {
@@ -436,7 +532,9 @@ function MemoryLightbox({ index, onClose, onPrevious, onNext }) {
 
     window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [handleClose, handlePrevious, handleNext]);
 
   if (!memory) return null;
@@ -448,7 +546,9 @@ function MemoryLightbox({ index, onClose, onPrevious, onNext }) {
       aria-modal="true"
       aria-label="Memory photo viewer"
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) handleClose();
+        if (event.target === event.currentTarget) {
+          handleClose();
+        }
       }}
     >
       <div className="lightbox-content">
@@ -495,18 +595,15 @@ function MemoryLightbox({ index, onClose, onPrevious, onNext }) {
   );
 }
 
-/* =========================================
-   MAIN APP
-========================================= */
-
-export default function App() {
+// MAIN APP
+function App() {
   const [scene, setScene] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [musicPlaying, setMusicPlaying] = useState(false);
 
   const audioRef = useRef(null);
 
-  // Create the audio element once and reuse it across all scenes.
+  // Create and reuse the audio element.
   useEffect(() => {
     const audio = new Audio("/music/rathinamo.mp3");
 
@@ -536,7 +633,15 @@ export default function App() {
     };
   }, []);
 
-  // Called directly from the Make a wish click.
+  // Scroll to top after React has rendered the new scene.
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+  }, [scene]);
+
   async function startMusic() {
     const audio = audioRef.current;
 
@@ -576,7 +681,9 @@ export default function App() {
   }
 
   function goNext() {
-    setScene((current) => Math.min(current + 1, scenes.length - 1));
+    setScene((current) =>
+      Math.min(current + 1, scenes.length - 1)
+    );
   }
 
   function goBack() {
@@ -607,7 +714,9 @@ export default function App() {
 
   const nextMemory = useCallback(() => {
     setLightboxIndex((current) =>
-      current === null ? null : (current + 1) % memories.length
+      current === null
+        ? null
+        : (current + 1) % memories.length
     );
   }, []);
 
@@ -625,7 +734,11 @@ export default function App() {
 
       <header className="topbar">
         <div className="brand-mark">
-          <Heart className="brand-heart" size={20} fill="currentColor" />
+          <Heart
+            className="brand-heart"
+            size={20}
+            fill="currentColor"
+          />
           <span>For Pappu</span>
         </div>
 
@@ -637,9 +750,13 @@ export default function App() {
       </header>
 
       <div className="scene-shell" key={scene}>
-        {scene === 0 && <WelcomeScene {...sceneProps} />}
+        {scene === 0 && (
+          <WelcomeScene {...sceneProps} />
+        )}
 
-        {scene === 1 && <IntroScene {...sceneProps} />}
+        {scene === 1 && (
+          <IntroScene {...sceneProps} />
+        )}
 
         {scene === 2 && (
           <AnticipationScene
@@ -680,3 +797,5 @@ export default function App() {
     </main>
   );
 }
+
+export default App;

@@ -1,17 +1,18 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+/* =========================================
+   GLOBAL THEME
+========================================= */
 
 :root {
-  --midnight: #080c1b;
-  --navy: #101831;
-  --blue: #91aaff;
-  --blue-light: #d2dcff;
-  --lavender: #d8c9ff;
-  --pink: #f1bfd8;
-  --white: #fffaff;
-  --muted: #c2c9df;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'DM Sans', sans-serif;
+  --pink: #8bc9ff;
+  --deep-pink: #4c9ce8;
+  --soft-pink: #142d4c;
+  --cream: #07172f;
+  --text: #eaf4ff;
+  --muted: #a9c5e5;
+  --glass: rgba(12, 31, 58, 0.78);
+  --border: rgba(174, 211, 255, 0.17);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
 }
 
 * {
@@ -19,217 +20,193 @@
 }
 
 html {
-  min-height: 100%;
   scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  margin: 0;
-  background: var(--midnight);
-  color: var(--white);
-  font-family: var(--sans);
-  -webkit-font-smoothing: antialiased;
+  background: var(--cream);
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
 }
 
 button {
   font: inherit;
-  -webkit-tap-highlight-color: transparent;
 }
 
 button:focus-visible {
-  outline: 2px solid var(--blue-light);
+  outline: 2px solid var(--pink);
   outline-offset: 4px;
 }
 
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-}
-
-::selection {
-  background: rgba(143, 170, 255, 0.4);
-  color: white;
-}
-
-/* MAIN BACKGROUND */
+/* =========================================
+   MAIN APP
+========================================= */
 
 .love-app {
   position: relative;
   isolation: isolate;
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
-  padding: 22px clamp(16px, 4vw, 60px) 16px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 15% 12%, rgba(67, 91, 166, 0.22), transparent 42%),
-    radial-gradient(ellipse at 90% 82%, rgba(112, 68, 142, 0.16), transparent 40%),
-    linear-gradient(145deg, #101831 0%, #0c1228 55%, #080c1b 100%);
+    radial-gradient(ellipse at 15% 15%, rgba(76, 156, 232, 0.17), transparent 38%),
+    radial-gradient(ellipse at 85% 80%, rgba(139, 201, 255, 0.12), transparent 35%),
+    #07172f;
 }
 
-.love-app::before {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  content: '';
+.ambient {
+  position: fixed;
+  z-index: -1;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  filter: blur(100px);
   pointer-events: none;
-  background: radial-gradient(circle at 50% 40%, rgba(123, 145, 220, 0.06), transparent 55%);
+  opacity: 0.2;
 }
 
-/* FLOATING PHOTOS */
+.ambient-one {
+  top: 10%;
+  left: -180px;
+  background: #397bc2;
+}
+
+.ambient-two {
+  right: -180px;
+  bottom: 5%;
+  background: #8bc9ff;
+}
+
+/* =========================================
+   FLOATING PHOTOS
+========================================= */
+
 
 .floating-photo-background {
   position: fixed;
-  z-index: 0;
   inset: 0;
+  z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  perspective: 1000px;
+  opacity: 0.35;
 }
 
 .floating-photo {
   position: absolute;
-  top: 110%;
-  left: var(--photo-left, 10%);
-  width: clamp(145px, 18vw, 245px);
-  aspect-ratio: 3 / 4;
-  padding: 6px;
+  width: 135px;
+  height: 175px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
   overflow: hidden;
-  border: 1px solid rgba(220, 229, 255, 0.55);
-  border-radius: 9px;
-  background: rgba(24, 34, 65, 0.95);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
   opacity: 0;
-  animation: memory-float-up var(--float-duration, 30s) linear var(--float-delay, 0s) infinite;
-  will-change: transform, opacity;
+  animation: memory-float-up var(--float-duration, 12s) linear
+    var(--float-delay, 0s) infinite;
 }
 
 .floating-photo img {
   width: 100%;
   height: 100%;
-  border-radius: 4px;
   object-fit: cover;
-  filter: brightness(0.9) saturate(1.08);
 }
 
 .floating-photo-overlay {
   position: absolute;
-  z-index: 1;
   inset: 0;
-  pointer-events: none;
-  background: rgba(7, 11, 25, 0.08);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(7, 23, 47, 0.3)
+  );
 }
 
 .floating-photo-1 {
-  --photo-left: 3%;
-  --float-duration: 31s;
-  --float-delay: -4s;
+  left: 5%;
+  --float-duration: 12s;
+  --float-delay: 0s;
 }
 
 .floating-photo-2 {
-  --photo-left: 22%;
-  --float-duration: 36s;
-  --float-delay: -17s;
+  left: 23%;
+  --float-duration: 13s;
+  --float-delay: 2s;
 }
 
 .floating-photo-3 {
-  --photo-left: 43%;
-  --float-duration: 33s;
-  --float-delay: -9s;
+  left: 42%;
+  --float-duration: 11s;
+  --float-delay: 4s;
 }
 
 .floating-photo-4 {
-  --photo-left: 66%;
-  --float-duration: 38s;
-  --float-delay: -23s;
+  left: 61%;
+  --float-duration: 13s;
+  --float-delay: 1s;
 }
 
 .floating-photo-5 {
-  --photo-left: 83%;
-  --float-duration: 34s;
-  --float-delay: -13s;
+  left: 80%;
+  --float-duration: 12s;
+  --float-delay: 3s;
 }
 
 .floating-photo-6 {
-  --photo-left: 72%;
-  --float-duration: 40s;
-  --float-delay: -29s;
+  left: 91%;
+  --float-duration: 14s;
+  --float-delay: 5s;
 }
 
 .floating-photo-7 {
-  --photo-left: 34%;
-  --float-duration: 35s;
-  --float-delay: -25s;
+  left: 33%;
+  --float-duration: 11s;
+  --float-delay: 6s;
 }
 
 @keyframes memory-float-up {
   0% {
-    transform: translate3d(-12px, 0, 0) rotate(-7deg) scale(0.93);
+    transform: translateY(110vh) rotate(-8deg);
     opacity: 0;
   }
-  12% { opacity: 0.38; }
-  70% { opacity: 0.38; }
+
+  12% {
+    opacity: 0.9;
+  }
+
+  85% {
+    opacity: 0.8;
+  }
+
   100% {
-    transform: translate3d(22px, -150vh, 0) rotate(7deg) scale(1.03);
+    transform: translateY(-220px) rotate(8deg);
     opacity: 0;
   }
 }
 
-/* DECORATIVE LIGHTS */
 
-.ambient {
-  position: absolute;
-  z-index: 1;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.ambient-one {
-  top: 12%;
-  left: 8%;
-  width: 180px;
-  height: 180px;
-  background: rgba(98, 125, 255, 0.09);
-  filter: blur(60px);
-}
-
-.ambient-two {
-  right: 8%;
-  bottom: 10%;
-  width: 230px;
-  height: 230px;
-  background: rgba(192, 125, 220, 0.08);
-  filter: blur(70px);
-}
-
-/* HEADER */
+/* =========================================
+   TOP NAVIGATION
+========================================= */
 
 .topbar {
   position: relative;
-  z-index: 3;
+  z-index: 5;
+  width: min(1180px, calc(100% - 48px));
+  margin: auto;
+  padding: 28px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto 20px;
 }
 
 .brand-mark {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: var(--white);
-  font-family: var(--serif);
-  font-size: 22px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .brand-heart {
@@ -240,373 +217,323 @@ img {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 15px;
-  border: 1px solid rgba(211, 222, 255, 0.22);
-  border-radius: 999px;
-  background: rgba(15, 23, 49, 0.86);
   color: var(--muted);
-  font-size: 11px;
-  letter-spacing: 0.13em;
-}
-
-.scene-counter strong {
-  color: var(--blue-light);
   font-size: 13px;
 }
 
-/* SCENES */
+.scene-counter strong {
+  color: var(--pink);
+}
+
+/* =========================================
+   SCENE LAYOUT
+========================================= */
 
 .scene-shell {
   position: relative;
   z-index: 2;
-  display: grid;
-  flex: 1;
-  width: 100%;
-  max-width: 1200px;
-  min-height: 520px;
+  width: min(1100px, calc(100% - 40px));
+  min-height: calc(100vh - 150px);
   margin: 0 auto;
-  place-items: center;
-}
-
-.surprise-scene {
-  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  width: 100%;
-  min-height: 500px;
-  padding: 35px 0;
-  text-align: center;
+  align-items: center;
   animation: scene-enter 0.65s ease both;
 }
 
 @keyframes scene-enter {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(15px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
+.surprise-scene {
+  width: 100%;
+  padding: 55px 30px;
+  text-align: center;
+}
+
 .scene-eyebrow {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 8px;
-  margin: 0 0 18px;
-  color: var(--blue-light);
+  margin: 0 0 22px;
+  color: var(--pink);
   font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .scene-title {
-  max-width: 950px;
   margin: 0;
-  color: var(--white);
-  font-family: var(--serif);
-  font-size: clamp(46px, 7.5vw, 94px);
+  color: var(--text);
+  font-family: "Playfair Display", serif;
+  font-size: clamp(42px, 7vw, 76px);
   font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  text-wrap: balance;
+  line-height: 1.13;
 }
 
-.scene-title em {
+.scene-title em,
+.birthday-heading em {
   color: var(--pink);
-  font-weight: 400;
+  font-family: "Sacramento", cursive;
+  font-style: normal;
+  font-size: 1.22em;
 }
 
 .scene-description {
-  max-width: 620px;
-  margin: 22px auto 0;
-  color: #e0e4f5;
-  font-size: clamp(14px, 1.5vw, 17px);
-  line-height: 1.85;
+  max-width: 570px;
+  margin: 25px auto 30px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.9;
 }
 
-/* WELCOME SCENE */
-
-.welcome-scene {
-  max-width: 1050px;
-  margin: 0 auto;
-  padding: 36px 10px;
+.scene-small-text {
+  margin-top: 25px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.5px;
 }
 
-.welcome-orbit {
-  position: relative;
-  z-index: 2;
+/* =========================================
+   WELCOME PAGE
+========================================= */
+
+.welcome-orbit,
+.countdown-heart {
+  width: 66px;
+  height: 66px;
+  margin: 0 auto 30px;
   display: grid;
-  width: clamp(100px, 13vw, 140px);
-  aspect-ratio: 1;
-  margin: 0 auto 24px;
-  border: 1px solid rgba(200, 211, 255, 0.32);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(145, 162, 255, 0.2), transparent 68%);
-  box-shadow: 0 0 45px rgba(125, 156, 255, 0.13);
-  color: var(--pink);
   place-items: center;
-  animation: orbit-breathe 5s ease-in-out infinite;
+  color: var(--pink);
+  background: rgba(139, 201, 255, 0.1);
+  border: 1px solid rgba(139, 201, 255, 0.28);
+  border-radius: 50%;
+  box-shadow: 0 0 35px rgba(76, 156, 232, 0.18);
 }
 
 .welcome-orbit svg {
-  width: 46%;
-  height: 46%;
+  width: 30px;
+  height: 30px;
 }
 
-.welcome-orbit::before {
-  position: absolute;
-  inset: -8px;
-  border: 1px solid rgba(125, 156, 255, 0.16);
-  border-radius: 50%;
-  content: '';
-}
-
-@keyframes orbit-breathe {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-7px) scale(1.035); }
-}
-
-.welcome-scene .scene-title {
-  position: relative;
-  z-index: 2;
-  max-width: 1000px;
-  margin: 18px auto;
-  font-size: clamp(48px, 8.4vw, 104px);
-  line-height: 1.05;
-  letter-spacing: -0.045em;
-  text-shadow: 0 3px 28px rgba(5, 9, 23, 0.2);
-}
-
-.welcome-scene .scene-description {
-  position: relative;
-  z-index: 2;
-  max-width: 560px;
-  margin-top: 20px;
-  font-size: clamp(15px, 2vw, 21px);
-  line-height: 1.65;
-}
-
-/* BUTTONS — EXPLICIT COLORS AND NO FADED DEFAULTS */
+/* =========================================
+   BUTTONS
+========================================= */
 
 .button-row {
-  position: relative;
-  z-index: 3;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 13px;
   margin-top: 32px;
 }
 
 .primary-button,
-.secondary-button,
-.music-toggle,
-.birthday-back {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
+.secondary-button {
   min-height: 48px;
-  padding: 12px 23px;
-  border-radius: 999px;
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.4;
-  text-align: center;
-  text-decoration: none;
-  white-space: normal;
+  padding: 0 23px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 50px;
   cursor: pointer;
-  opacity: 1;
-  visibility: visible;
-  -webkit-appearance: none;
-  appearance: none;
   transition:
+    transform 0.25s ease,
     background 0.25s ease,
-    color 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    transform 0.25s ease;
+    box-shadow 0.25s ease;
 }
 
-.primary-button,
-.welcome-scene .primary-button {
-  border: 1px solid #e5dcff;
-  background: linear-gradient(135deg, #d8c9ff 0%, #b9caff 100%);
-  color: #101831;
-  box-shadow: 0 8px 25px rgba(143, 170, 255, 0.22);
+.primary-button {
+  color: #07172f;
+  background: linear-gradient(135deg, #c5e5ff, #75baff);
+  border: 1px solid transparent;
+  font-weight: 700;
+  box-shadow: 0 8px 25px rgba(76, 156, 232, 0.2);
 }
 
-.primary-button:hover,
-.welcome-scene .primary-button:hover {
-  border-color: #ffffff;
-  background: linear-gradient(135deg, #eee5ff 0%, #d7e1ff 100%);
-  color: #080c1b;
-  box-shadow: 0 12px 32px rgba(143, 170, 255, 0.35);
-  transform: translateY(-2px);
+.primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(76, 156, 232, 0.35);
 }
 
-.secondary-button,
-.birthday-back {
-  border: 1px solid rgba(194, 208, 255, 0.48);
-  background: #182345;
-  color: #f7f5ff;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.16);
-}
-
-.secondary-button:hover,
-.birthday-back:hover {
-  border-color: #b7c6ff;
-  background: #2d3c69;
-  color: #ffffff;
-  box-shadow: 0 8px 24px rgba(83, 108, 190, 0.2);
-  transform: translateY(-2px);
-}
-
-.primary-button:active,
-.secondary-button:active,
-.birthday-back:active,
-.music-toggle:active {
-  transform: scale(0.98);
-}
-
-.primary-button svg,
-.secondary-button svg,
-.birthday-back svg,
-.music-toggle svg {
-  flex-shrink: 0;
-  color: inherit;
-  opacity: 1;
-}
-
-.primary-button:disabled,
-.secondary-button:disabled,
-.birthday-back:disabled,
-.music-toggle:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+.primary-button:disabled {
+  opacity: 0.65;
+  cursor: wait;
   transform: none;
 }
 
-/* INTRO SCENE */
+.secondary-button {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border);
+}
 
-.intro-scene,
-.anticipation-scene,
-.final-scene {
+.secondary-button:hover {
+  background: rgba(139, 201, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   INTRO PAGE
+========================================= */
+
+.intro-quote {
+  max-width: 580px;
+  margin: 32px auto;
+  padding: 18px 24px;
+  color: #d4eaff;
+  border-left: 2px solid var(--pink);
+  background: rgba(139, 201, 255, 0.06);
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* =========================================
+   PAGE 3: COUNTDOWN
+========================================= */
+
+.anticipation-scene {
   max-width: 850px;
   margin: auto;
 }
 
-.intro-quote {
-  max-width: 700px;
-  margin: 28px auto 0;
-  padding: 22px 28px;
-  border-left: 2px solid var(--pink);
-  border-radius: 0 12px 12px 0;
-  background: linear-gradient(90deg, rgba(240, 183, 210, 0.09), transparent);
-  color: #f2ddec;
-  font-family: var(--serif);
-  font-size: clamp(21px, 3vw, 31px);
-  font-style: italic;
-  line-height: 1.5;
-  text-align: left;
+.birthday-countdown-section {
+  max-width: 520px;
+  margin: 35px auto 25px;
+  padding: 28px 25px;
+  border: 1px solid rgba(139, 201, 255, 0.2);
+  border-radius: 24px;
+  background: rgba(10, 30, 57, 0.78);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
 }
 
-/* ANTICIPATION SCENE */
-
-.countdown-heart {
-  display: grid;
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 25px;
-  border: 1px solid rgba(240, 183, 210, 0.4);
-  border-radius: 50%;
-  background: rgba(240, 183, 210, 0.07);
-  color: var(--pink);
-  box-shadow: 0 0 45px rgba(240, 183, 210, 0.1);
-  place-items: center;
-  animation: heart-beat 2.2s ease-in-out infinite;
+.birthday-countdown-section .countdown-heart {
+  width: 45px;
+  height: 45px;
+  margin-bottom: 17px;
 }
 
 .countdown-heart svg {
-  width: 40px;
-  height: 40px;
-  fill: currentColor;
+  width: 21px;
+  height: 21px;
 }
 
-@keyframes heart-beat {
-  0%, 100% { transform: scale(1); }
-  12% { transform: scale(1.08); }
-  24% { transform: scale(1); }
-  36% { transform: scale(1.06); }
+.countdown-label {
+  margin: 0 0 17px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.countdown-clock {
+  color: #d7edff;
+  font-size: clamp(38px, 8vw, 58px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 25px rgba(139, 201, 255, 0.2);
+}
+
+.countdown-message {
+  margin: 18px 0 8px;
+  color: #d9eaff;
+  font-size: 14px;
+}
+
+.countdown-small-text {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .compact-button-row {
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
-/* BIRTHDAY SCENE */
+/* =========================================
+   PAGE 4: FIREWORKS BACKGROUND
+========================================= */
 
 .birthday-scene {
-  justify-content: flex-start;
-  padding-top: 14px;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 45px 25px 65px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.birthday-content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1000px);
+  margin: 0 auto;
+  padding: 25px 28px 40px;
+  border: 1px solid rgba(174, 211, 255, 0.12);
+  border-radius: 28px;
+  background: rgba(5, 16, 35, 0.55);
+  backdrop-filter: blur(3px);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.22);
 }
 
 .birthday-heading {
-  max-width: 1000px;
-  margin: 0 auto;
-  color: var(--white);
-  font-family: var(--serif);
-  font-size: clamp(43px, 7vw, 82px);
+  margin: 0;
+  color: #ffffff;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(42px, 7vw, 76px);
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1.15;
+  text-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
 }
 
 .birthday-heading em {
-  color: var(--pink);
-  font-weight: 400;
+  color: #ffb8d8;
 }
 
 .birthday-emoji {
-  display: inline-block;
-  color: #e8d6a8;
-  animation: birthday-sparkle 3s ease-in-out infinite;
-}
-
-@keyframes birthday-sparkle {
-  0%, 100% { transform: rotate(-8deg) scale(1); }
-  50% { transform: rotate(10deg) scale(1.15); }
+  color: #ffd166;
+  font-size: 24px;
 }
 
 .birthday-description {
-  max-width: 680px;
-  margin: 18px auto 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.9;
+  max-width: 600px;
+  margin: 20px auto 30px;
+  color: #e0eaff;
+  font-size: 15px;
+  line-height: 1.8;
 }
 
-/* MUSIC PLAYER */
+/* =========================================
+   MUSIC PLAYER
+========================================= */
 
 .music-player {
+  max-width: 550px;
+  margin: 30px auto 42px;
+  padding: 16px 19px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  width: min(100%, 520px);
-  margin: 25px auto 34px;
-  padding: 13px 17px;
-  border: 1px solid rgba(211, 222, 255, 0.22);
-  border-radius: 16px;
-  background: rgba(12, 20, 44, 0.94);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  gap: 15px;
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  background: rgba(8, 26, 49, 0.83);
   text-align: left;
-  backdrop-filter: blur(16px);
 }
 
 .music-player-left {
@@ -617,862 +544,802 @@ img {
 }
 
 .music-icon {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
   display: grid;
-  flex: 0 0 44px;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(200, 211, 255, 0.24);
-  border-radius: 12px;
-  background: rgba(125, 156, 255, 0.12);
-  color: var(--blue-light);
   place-items: center;
-}
-
-.music-details {
-  min-width: 0;
-}
-
-.music-details h3,
-.music-details p {
-  overflow: hidden;
-  margin: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  color: var(--pink);
+  border-radius: 12px;
+  background: rgba(139, 201, 255, 0.12);
 }
 
 .music-details h3 {
+  margin: 0 0 5px;
+  color: var(--text);
   font-size: 13px;
-  font-weight: 600;
 }
 
 .music-details p {
-  margin-top: 5px;
+  margin: 0;
   color: var(--muted);
   font-size: 11px;
 }
 
 .music-toggle {
-  flex-shrink: 0;
-  min-height: 38px;
-  padding: 9px 15px;
-  border: 1px solid rgba(201, 213, 255, 0.45);
-  background: #233057;
-  color: #dce5ff;
+  min-width: 90px;
+  min-height: 39px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #07172f;
+  background: var(--pink);
+  border: 0;
+  border-radius: 30px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.music-toggle:hover {
-  border-color: var(--blue-light);
-  background: #38497d;
-  color: #ffffff;
-}
+/* =========================================
+   PHOTO GALLERY
+========================================= */
 
-/* GALLERY */
 
-.media-heading {
-  margin: 10px 0 8px;
-  color: var(--white);
-  font-family: var(--serif);
-  font-size: clamp(28px, 4vw, 43px);
-  font-weight: 500;
-  text-align: center;
-}
+/* PHOTO GALLERY */
 
-.gallery-subtitle {
-  margin: 0 auto 27px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.8;
-  text-align: center;
-}
-
+/* GALLERY SECTION */
 .photo-gallery {
+  width: 100%;
+  max-width: 1000px;
+  margin: 28px auto 35px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 22px);
-  width: 100%;
-  margin: 0 auto;
-  perspective: 1200px;
+  gap: 12px;
+  align-items: start;
 }
 
+/* PHOTO CARD */
 .photo-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding: 9px;
+  padding: 6px;
   overflow: hidden;
-  border: 1px solid rgba(216, 224, 255, 0.22);
-  border-radius: 13px;
-  background: linear-gradient(145deg, rgba(36, 47, 82, 0.96), rgba(14, 21, 45, 0.99));
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.23);
-  color: var(--white);
-  cursor: pointer;
+  color: #f4e8f2;
+  background: rgba(15, 29, 57, 0.82);
+  border: 1px solid rgba(139, 201, 255, 0.28);
+  border-radius: 12px;
   text-align: left;
-  transform-style: preserve-3d;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-  animation: card-enter 0.7s ease both;
-}
-
-.photo-card:nth-child(2) { animation-delay: 0.08s; }
-.photo-card:nth-child(3) { animation-delay: 0.16s; }
-.photo-card:nth-child(4) { animation-delay: 0.24s; }
-.photo-card:nth-child(5) { animation-delay: 0.32s; }
-.photo-card:nth-child(6) { animation-delay: 0.4s; }
-.photo-card:nth-child(7) { animation-delay: 0.48s; }
-
-@keyframes card-enter {
-  from {
-    opacity: 0;
-    transform: translateY(20px) rotateX(5deg);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) rotateX(0);
-  }
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
 }
 
 .photo-card:hover {
-  z-index: 2;
-  border-color: rgba(200, 215, 255, 0.65);
-  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.32), 0 0 25px rgba(125, 156, 255, 0.13);
-  transform: translateY(-6px);
+  transform: translateY(-5px);
+  border-color: #8bc9ff;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
 }
 
+/* PORTRAIT IMAGE */
 .photo-card-image {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 210px;
   overflow: hidden;
-  border-radius: 7px;
-  background: #192342;
+  border-radius: 8px;
 }
 
 .photo-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
+  display: block;
+  transition: transform 0.5s ease;
 }
 
 .photo-card:hover .photo-card-image img {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
+/* IMAGE SHINE */
 .photo-card-shine {
   position: absolute;
   inset: 0;
-  background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.17) 45%, transparent 65%);
-  opacity: 0;
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.1),
+    transparent 45%
+  );
   pointer-events: none;
-  transform: translateX(-120%);
-  transition: transform 0.8s ease, opacity 0.4s ease;
 }
 
-.photo-card:hover .photo-card-shine {
-  opacity: 1;
-  transform: translateX(120%);
-}
-
+/* CAPTIONS */
 .photo-card-caption {
-  padding: 12px 5px 5px;
+  padding: 9px 3px 5px;
 }
 
 .photo-card-caption h3 {
-  margin: 0;
-  color: #f9f5ff;
-  font-family: var(--serif);
-  font-size: clamp(17px, 1.7vw, 22px);
+  margin: 0 0 5px;
+  color: #f4e8f2;
+  font-family: "Playfair Display", serif;
+  font-size: 13px;
   font-weight: 500;
 }
 
 .photo-card-caption p {
-  margin: 5px 0 0;
-  color: #b9c3e0;
-  font-size: 10px;
-  line-height: 1.6;
-}
-
-.memory-note {
-  max-width: 600px;
-  margin: 25px auto 0;
-  color: #d6d9ed;
-  font-family: var(--serif);
-  font-size: clamp(19px, 2.4vw, 25px);
-  font-style: italic;
-  line-height: 1.6;
-  text-align: center;
-}
-
-.birthday-closing {
-  max-width: 670px;
-  margin: 30px auto 0;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.9;
-  text-align: center;
-}
-
-/* LIGHTBOX */
-
-.photo-lightbox {
-  position: fixed;
-  z-index: 20;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(3, 5, 14, 0.94);
-  backdrop-filter: blur(18px);
-  animation: lightbox-appear 0.25s ease both;
-}
-
-@keyframes lightbox-appear {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.lightbox-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: min(100%, 780px);
-  max-height: 90vh;
-  padding: 15px;
-  border: 1px solid rgba(213, 222, 255, 0.25);
-  border-radius: 18px;
-  background: #111933;
-  box-shadow: 0 25px 90px rgba(0, 0, 0, 0.5);
-}
-
-.lightbox-content > img {
-  width: 100%;
-  max-height: 70vh;
-  border-radius: 10px;
-  background: #090d1b;
-  object-fit: contain;
-}
-
-.lightbox-close,
-.lightbox-nav {
-  position: absolute;
-  z-index: 2;
-  display: grid;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  background: #182345;
-  color: white;
-  cursor: pointer;
-  place-items: center;
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-
-.lightbox-close {
-  top: 12px;
-  right: 12px;
-  width: 40px;
-  height: 40px;
-}
-
-.lightbox-nav {
-  top: 45%;
-  width: 44px;
-  height: 44px;
-}
-
-.lightbox-prev { left: -22px; }
-.lightbox-next { right: -22px; }
-
-.lightbox-close:hover,
-.lightbox-nav:hover {
-  background: #38497d;
-  transform: scale(1.06);
-}
-
-.lightbox-caption {
-  padding: 15px 8px 5px;
-  text-align: center;
-}
-
-.lightbox-caption h3 {
   margin: 0;
-  font-family: var(--serif);
-  font-size: 27px;
-  font-weight: 500;
+  color: #9dc9f3;
+  font-size: 10px;
 }
 
-.lightbox-caption p {
-  margin: 7px 0 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
+/* TABLET */
+@media (max-width: 900px) {
+  .photo-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-.lightbox-count {
-  margin-top: 10px;
-  color: var(--blue-light);
-  font-size: 11px;
-  letter-spacing: 0.15em;
+/* MOBILE */
+@media (max-width: 600px) {
+  .photo-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  .photo-card-image {
+    height: 190px;
+  }
+
+  .photo-card-caption h3 {
+    font-size: 12px;
+  }
 }
 
-/* FINAL SCENE */
+@media (max-width: 360px) {
+  .photo-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-card-image {
+    height: 300px;
+  }
+}
+
+
+/* =========================================
+   PAGE 5: PERSONAL LETTER
+========================================= */
+
+.final-scene {
+  max-width: 850px;
+  margin: auto;
+}
 
 .wish-card {
-  position: relative;
-  width: min(100%, 760px);
-  margin: 25px auto 0;
-  padding: clamp(25px, 5vw, 50px);
-  border: 1px solid rgba(213, 222, 255, 0.25);
-  border-radius: 20px;
-  background: linear-gradient(145deg, rgba(28, 39, 77, 0.95), rgba(12, 19, 42, 0.97));
-  box-shadow: 0 24px 65px rgba(0, 0, 0, 0.24);
-  text-align: center;
+  max-width: 740px;
+  margin: 35px auto;
+  padding: 32px;
+  color: #dceaff;
+  background: rgba(12, 34, 62, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  text-align: left;
+  box-shadow: var(--shadow);
 }
 
 .wish-card p {
-  margin: 0;
-  color: #e2e5f7;
-  font-family: var(--serif);
-  font-size: clamp(21px, 3vw, 29px);
-  line-height: 1.7;
-}
-
-.wish-card p + p {
-  margin-top: 17px;
+  margin: 0 0 19px;
+  font-size: 14px;
+  line-height: 1.95;
 }
 
 .promise-line {
-  margin: 25px auto 0;
-  color: var(--pink);
-  font-family: var(--serif);
-  font-size: clamp(27px, 4.5vw, 43px);
-  font-style: italic;
-  line-height: 1.35;
+  margin: 28px 0;
+  padding: 17px;
+  color: #ffb8d8;
+  background: rgba(139, 201, 255, 0.08);
+  border-left: 3px solid var(--pink);
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  text-align: center;
 }
 
 .final-signature {
-  margin: 24px 0 0;
-  color: var(--blue-light);
-  font-family: var(--serif);
-  font-size: 24px;
+  color: var(--pink);
+  font-family: "Playfair Display", serif;
+  font-size: 18px !important;
   font-style: italic;
 }
 
-/* FOOTER */
+/* =========================================
+   FOOTER
+========================================= */
 
 .love-footer {
   position: relative;
   z-index: 3;
+  padding: 25px 15px 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 22px auto 0;
-  padding: 15px 0 4px;
-  color: rgba(208, 216, 239, 0.76);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-align: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 11px;
 }
 
 .love-footer svg {
   color: var(--pink);
 }
 
-/* SCROLLBAR */
+/* =========================================
+   PHOTO LIGHTBOX
+========================================= */
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #39466e #0a1023;
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  padding: 25px;
+  display: grid;
+  place-items: center;
+  background: rgba(1, 7, 18, 0.94);
+  backdrop-filter: blur(12px);
 }
 
-::-webkit-scrollbar {
-  width: 8px;
+.lightbox-content {
+  position: relative;
+  width: min(850px, 100%);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-::-webkit-scrollbar-track {
-  background: #0a1023;
+.lightbox-content > img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
-::-webkit-scrollbar-thumb {
-  border: 2px solid #0a1023;
-  border-radius: 999px;
-  background: #39466e;
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  z-index: 2;
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-/* TABLET */
+.lightbox-close {
+  top: -15px;
+  right: -15px;
+}
+
+.lightbox-nav {
+  top: 40%;
+}
+
+.lightbox-prev {
+  left: 12px;
+}
+
+.lightbox-next {
+  right: 12px;
+}
+
+.lightbox-caption {
+  padding-top: 17px;
+  text-align: center;
+}
+
+.lightbox-caption h3 {
+  margin: 0 0 7px;
+  font-family: "Playfair Display", serif;
+}
+
+.lightbox-caption p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.lightbox-count {
+  margin-top: 12px;
+  color: var(--pink);
+  font-size: 12px;
+}
+
+/* =========================================
+   TABLET RESPONSIVENESS
+========================================= */
 
 @media (max-width: 900px) {
-  .love-app {
-    padding: 20px 22px 15px;
-  }
-
   .photo-gallery {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .floating-photo {
-    width: clamp(125px, 20vw, 190px);
+  .photo-card-image {
+    height: 230px;
   }
 
-  .floating-photo-1 { --photo-left: 1%; }
-  .floating-photo-2 { --photo-left: 76%; }
-  .floating-photo-3 { --photo-left: 2%; }
-  .floating-photo-4 { --photo-left: 77%; }
-
-  .floating-photo-5,
-  .floating-photo-6,
-  .floating-photo-7 {
-    display: none;
+  .birthday-content {
+    padding: 25px 20px 35px;
   }
 }
 
-/* MOBILE */
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
 
 @media (max-width: 600px) {
-  .love-app {
-    padding: 15px 15px 12px;
-  }
-
   .topbar {
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  .brand-mark {
-    font-size: 19px;
-  }
-
-  .scene-counter {
-    padding: 8px 11px;
-    font-size: 10px;
+    width: calc(100% - 32px);
+    padding: 20px 0;
   }
 
   .scene-shell {
-    min-height: 470px;
+    width: calc(100% - 24px);
+    min-height: calc(100vh - 125px);
   }
 
   .surprise-scene {
-    min-height: 440px;
-    padding: 25px 0;
+    padding: 35px 10px;
   }
 
   .scene-title {
-    font-size: clamp(40px, 12vw, 62px);
+    font-size: clamp(39px, 11vw, 55px);
   }
 
   .scene-description {
-    max-width: 95%;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.8;
   }
 
-  .welcome-scene {
-    padding: 25px 5px;
-  }
-
-  .welcome-orbit {
-    width: 96px;
-    margin-bottom: 20px;
-  }
-
-  .welcome-scene .scene-title {
-    max-width: 100%;
-    margin: 17px auto;
-    font-size: clamp(43px, 11.5vw, 65px);
-    line-height: 1.06;
-  }
-
-  .welcome-scene .scene-description {
-    max-width: 340px;
-    margin-top: 16px;
-    font-size: 14px;
+  .scene-eyebrow {
+    font-size: 10px;
+    letter-spacing: 1.5px;
   }
 
   .button-row {
     gap: 10px;
-    margin-top: 26px;
   }
 
   .primary-button,
-  .secondary-button,
-  .birthday-back {
-    min-height: 44px;
-    padding: 11px 17px;
+  .secondary-button {
+    min-height: 45px;
+    padding: 0 17px;
     font-size: 12px;
   }
 
-  .intro-quote {
-    padding: 17px 20px;
-    font-size: 22px;
+  .birthday-countdown-section {
+    margin-top: 28px;
+    padding: 24px 14px;
   }
 
-  .birthday-heading {
-    font-size: clamp(39px, 11vw, 57px);
+  .countdown-clock {
+    font-size: clamp(34px, 10vw, 48px);
+    letter-spacing: 2px;
   }
 
-  .birthday-description {
-    font-size: 12px;
-  }
-
-  .music-player {
-    gap: 10px;
-    margin: 22px auto 27px;
-    padding: 11px;
-  }
-
-  .music-icon {
-    flex-basis: 38px;
-    width: 38px;
-    height: 38px;
-  }
-
-  .music-details h3 { font-size: 12px; }
-  .music-details p { font-size: 10px; }
-
-  .music-toggle {
-    min-height: 35px;
-    padding: 8px 10px;
+  .countdown-label {
     font-size: 11px;
   }
 
-  .media-heading {
-    font-size: 30px;
+  .countdown-message {
+    font-size: 12px;
   }
 
-  .gallery-subtitle {
-    margin-bottom: 20px;
+  .birthday-scene {
+    padding: 20px 10px 45px;
+  }
+
+  .birthday-content {
+    padding: 22px 13px 30px;
+    border-radius: 20px;
+  }
+
+  .birthday-heading {
+    font-size: clamp(38px, 10vw, 54px);
+  }
+
+  .birthday-description {
+    font-size: 13px;
+  }
+
+  .music-player {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .music-details h3 {
+    font-size: 12px;
+  }
+
+  .music-details p {
+    font-size: 10px;
+  }
+
+  .music-toggle {
+    min-width: 75px;
     font-size: 11px;
   }
 
   .photo-gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 11px;
   }
 
-  .photo-card {
-    padding: 6px;
-    border-radius: 10px;
+  .photo-card-image {
+    height: 165px;
   }
 
   .photo-card-caption {
-    padding: 9px 4px 4px;
-  }
-
-  .photo-card-caption h3 { font-size: 18px; }
-  .photo-card-caption p { font-size: 10px; }
-
-  .memory-note {
-    margin-top: 22px;
-    font-size: 20px;
-  }
-
-  .birthday-closing {
-    margin-top: 22px;
-    font-size: 12px;
-  }
-
-  .wish-card {
-    padding: 25px 20px;
-    border-radius: 15px;
-  }
-
-  .wish-card p { font-size: 21px; }
-  .promise-line { font-size: 29px; }
-  .final-signature { font-size: 21px; }
-
-  .love-footer {
-    margin-top: 18px;
-    font-size: 9px;
-    line-height: 1.8;
-  }
-
-  .floating-photo {
-    width: 105px;
-    padding: 4px;
-  }
-
-  .floating-photo-1 { --photo-left: 0%; }
-  .floating-photo-2 { --photo-left: 77%; }
-  .floating-photo-3 { --photo-left: 1%; }
-  .floating-photo-4 { --photo-left: 77%; }
-
-  .floating-photo-5 {
-    display: block;
-    --photo-left: 0%;
-  }
-
-  .floating-photo-6 {
-    display: block;
-    --photo-left: 77%;
-  }
-
-  .floating-photo-7 {
-    display: block;
-    --photo-left: 2%;
-  }
-
-  .lightbox-content {
-    padding: 9px;
-  }
-
-  .lightbox-content > img {
-    max-height: 66vh;
-  }
-
-  .lightbox-prev { left: -5px; }
-  .lightbox-next { right: -5px; }
-
-  .lightbox-nav {
-    width: 37px;
-    height: 37px;
-  }
-
-  .lightbox-caption h3 { font-size: 23px; }
-  .lightbox-caption p { font-size: 11px; }
-}
-
-/* EXTRA SMALL PHONES */
-
-@media (max-width: 380px) {
-  .love-app {
-    padding-right: 11px;
-    padding-left: 11px;
-  }
-
-  .brand-mark {
-    font-size: 17px;
-  }
-
-  .scene-counter {
-    gap: 5px;
-    padding: 7px 9px;
-    letter-spacing: 0.08em;
-  }
-
-  .welcome-scene .scene-title {
-    font-size: clamp(39px, 11vw, 48px);
-  }
-
-  .photo-gallery {
-    gap: 9px;
+    padding: 10px;
   }
 
   .photo-card-caption h3 {
+    font-size: 12px;
+  }
+
+  .memory-note {
     font-size: 16px;
   }
 
-  .floating-photo {
-    width: 95px;
+  .wish-card {
+    padding: 22px 17px;
   }
 
-  .primary-button,
-  .secondary-button,
-  .birthday-back {
-    padding: 10px 13px;
+  .wish-card p {
+    font-size: 13px;
+  }
+
+  .promise-line {
+    font-size: 16px;
+  }
+
+  .lightbox-content > img {
+    max-height: 65vh;
+  }
+
+  .lightbox-nav {
+    top: 35%;
+  }
+
+  .lightbox-prev {
+    left: 5px;
+  }
+
+  .lightbox-next {
+    right: 5px;
+  }
+
+  .lightbox-close {
+    top: -48px;
+    right: 0;
   }
 }
 
-/* ACCESSIBILITY */
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+  .scene-title {
+    font-size: 38px;
+  }
+
+  .photo-card-image {
+    height: 140px;
+  }
+
+  .photo-card-caption h3 {
+    font-size: 11px;
+  }
+
+  .countdown-clock {
+    font-size: 32px;
+  }
+
+  .music-player {
+    flex-wrap: wrap;
+  }
+
+  .music-player-left {
+    width: 100%;
+  }
+
+  .music-toggle {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   LANDSCAPE MOBILE
+========================================= */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .scene-shell {
+    min-height: auto;
+  }
+
+  .surprise-scene {
+    padding: 20px 10px;
+  }
+
+  .scene-title {
+    font-size: 38px;
+  }
+
+  .birthday-countdown-section {
+    padding: 15px;
+    margin: 15px auto;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* PAGE 3: COUNTDOWN */
+.anticipation-scene {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.birthday-countdown-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 760px);
+  min-height: 300px;
+  margin: 25px auto;
+  padding: 40px 20px;
+  overflow: hidden;
+  border: 1px solid rgba(216, 201, 255, 0.2);
+  border-radius: 22px;
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(115, 132, 209, 0.2),
+      transparent 65%
+    ),
+    rgba(18, 27, 55, 0.88);
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.2);
+}
+
+.countdown-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  text-align: center;
+}
+
+.countdown-content .countdown-heart {
+  margin: 0 auto 20px;
+}
+
+.countdown-label {
+  margin: 0 0 18px;
+  color: var(--lavender);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+
+.countdown-clock {
+  color: var(--white);
+  font-family: var(--serif);
+  font-size: clamp(48px, 10vw, 82px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 35px rgba(180, 185, 255, 0.28);
+}
+
+.countdown-message {
+  margin: 18px 0 0;
+  color: #e3d9ff;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.countdown-small-text {
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+/* PAGE 4: NO FIREWORKS OR CONFETTI */
+.birthday-scene {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  min-height: auto;
+  margin: 0 auto;
+  padding: 35px 0 55px;
+  overflow: visible;
+  isolation: auto;
+  justify-content: flex-start;
+}
+
+/* Keep the birthday page elegant and calm */
+.birthday-scene::before {
+  content: none;
+}
+
+/* Floating photo background */
+.floating-photo-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.floating-photo {
+  position: absolute;
+  width: 135px;
+  height: 175px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  overflow: hidden;
+  opacity: 0;
+  animation: memory-float-up var(--float-duration, 12s) linear
+    var(--float-delay, 0s) infinite;
+}
+
+.floating-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.floating-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 23, 47, 0.3);
+}
+
+.floating-photo-1 {
+  left: 5%;
+  --float-duration: 12s;
+  --float-delay: 0s;
+}
+
+.floating-photo-2 {
+  left: 23%;
+  --float-duration: 13s;
+  --float-delay: 4s;
+}
+
+.floating-photo-3 {
+  left: 42%;
+  --float-duration: 11s;
+  --float-delay: 8s;
+}
+
+.floating-photo-4 {
+  left: 61%;
+  --float-duration: 14s;
+  --float-delay: 2s;
+}
+
+.floating-photo-5 {
+  left: 80%;
+  --float-duration: 12s;
+  --float-delay: 6s;
+}
+
+.floating-photo-6 {
+  left: 91%;
+  --float-duration: 13s;
+  --float-delay: 11s;
+}
+
+.floating-photo-7 {
+  left: 33%;
+  --float-duration: 14s;
+  --float-delay: 5s;
+}
+
+@keyframes memory-float-up {
+  0% {
+    transform: translateY(110vh) rotate(-8deg);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 0.9;
+  }
+
+  85% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-220px) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+/* Mobile countdown */
+@media (max-width: 600px) {
+  .birthday-countdown-section {
+    min-height: 250px;
+    padding: 28px 14px;
+    border-radius: 16px;
+  }
+
+  .countdown-clock {
+    font-size: clamp(38px, 10vw, 58px);
+    letter-spacing: 2px;
+  }
+
+  .countdown-label {
+    font-size: 11px;
+  }
+
+  .countdown-message {
+    font-size: 12px;
+  }
+
+  .countdown-small-text {
+    font-size: 10px;
+  }
+
+  .birthday-scene {
+    padding: 20px 10px 45px;
   }
 
   .floating-photo {
-    animation: none;
-    top: 20%;
-    opacity: 0.15;
+    width: 95px;
+    height: 125px;
   }
 }
 
 
-/* =========================================
-   MOBILE RESPONSIVENESS FIX
-   Keeps the desktop design unchanged
-========================================= */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+.birthday-closing {
+  width: calc(100% - 30px);
+  max-width: 700px;
+  margin: 25px auto 35px;
+  padding: 0 15px;
+  text-align: center;
+  color: #a9c5e5;
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: break-word;
 }
 
-html {
-  width: 100%;
-  min-width: 0;
-  overflow-x: clip;
-}
-
-body {
-  width: 100%;
-  min-width: 0;
-  margin: 0;
-  overflow-x: clip;
-}
-
-img,
-video {
-  max-width: 100%;
-}
-
-/* Tablet and mobile */
-@media screen and (max-width: 768px) {
-  #root {
-    width: 100%;
-    min-width: 0;
-    overflow-x: clip;
-  }
-
-  /* Main layout containers */
-  .app,
-  .birthday-app,
-  .app-container,
-  main,
-  .scene,
-  .scene-content {
-    max-width: 100%;
-    min-width: 0;
-  }
-
-  .scene {
-    width: 100%;
-    min-height: 100svh;
-    min-height: 100dvh;
-    padding: 76px 18px 32px;
-  }
-
-  .scene-content {
-    width: 100%;
-    margin-inline: auto;
-  }
-
-  /* Headings and paragraphs */
-  h1,
-  .scene h1,
-  .hero-title {
-    max-width: 100%;
-    font-size: clamp(2.2rem, 10vw, 3.5rem);
-    line-height: 1.08;
-    overflow-wrap: anywhere;
-  }
-
-  h2 {
-    font-size: clamp(1.7rem, 7vw, 2.5rem);
-    line-height: 1.15;
-  }
-
-  p {
-    max-width: 100%;
-    overflow-wrap: break-word;
-  }
-
-  /* Navigation and header */
-  header,
-  .header,
-  .navbar {
-    max-width: 100%;
-  }
-
-  /* Buttons */
-  button,
-  .btn,
-  .primary-button,
-  .secondary-button {
-    max-width: 100%;
-    white-space: normal;
-    overflow-wrap: break-word;
-  }
-
-  /* Photo gallery */
-  .gallery,
-  .memory-gallery,
-  .gallery-grid {
-    width: 100%;
-    min-width: 0;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .gallery img,
-  .memory-gallery img,
-  .gallery-grid img,
-  .memory-card img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    object-fit: cover;
-  }
-
-  /* Floating background photos */
-  .floating-photo,
-  .floating-photos img {
-    max-width: 34vw;
-    max-height: 24vh;
-  }
-
-  /* Music player */
-  .music-player {
-    max-width: calc(100% - 28px);
-  }
-
-  /* Photo lightbox */
-  .lightbox {
-    padding: 16px;
-  }
-
-  .lightbox img {
-    display: block;
-    max-width: 100%;
-    max-height: 75dvh;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-  }
-
-  /* Footer */
-  footer,
-  .footer {
-    padding-inline: 16px;
-    overflow-wrap: anywhere;
-  }
-}
-
-/* Small mobile phones */
-@media screen and (max-width: 480px) {
-  .scene {
-    padding: 72px 15px 26px;
-  }
-
-  .gallery,
-  .memory-gallery,
-  .gallery-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
-  }
-
-  h1,
-  .scene h1,
-  .hero-title {
-    font-size: clamp(2rem, 9vw, 2.8rem);
-  }
-
-  button,
-  .btn,
-  .primary-button,
-  .secondary-button {
-    min-height: 44px;
-  }
+.memory-note {
+  max-width: 650px;
+  margin: 25px auto 15px;
+  padding: 0 15px;
+  color: #d8eaff;
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.7;
+  text-align: center;
 }

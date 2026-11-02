@@ -5,6 +5,7 @@
   font-family: 'DM Sans', sans-serif;
   color: #eaf4ff;
   background: #07172f;
+
   --pink: #8bc9ff;
   --deep-pink: #4c9ce8;
   --soft-pink: #142d4c;
@@ -26,13 +27,17 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-body, button, a {
+body,
+button,
+a {
   font-family: 'DM Sans', sans-serif;
 }
 
-button, a {
+button,
+a {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -45,14 +50,15 @@ a {
   text-decoration: none;
 }
 
-button:focus-visible, a:focus-visible {
-  outline: 3px solid #d64e88;
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #8bc9ff;
   outline-offset: 4px;
 }
 
-::selection {
-  background: #f7c8da;
-  color: #71314e;
+*::selection {
+  background: #8bc9ff;
+  color: #07172f;
 }
 
 img {
@@ -61,7 +67,9 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
